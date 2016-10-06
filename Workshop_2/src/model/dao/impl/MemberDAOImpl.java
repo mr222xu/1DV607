@@ -258,7 +258,7 @@ public class MemberDAOImpl implements MemberDAO {
 	public void delete(Member m, Authorization a) throws AuthException, DAOException {
 		// Validate auth
 		if (a == null || !a.isAuthorized())
-			throw new AuthException("Must be authorized to create");
+			throw new AuthException("Must be authorized to delete");
 		
 		try {
 			// Create XML database file if it doesn't exist
@@ -288,11 +288,15 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public void update(Member m, Authorization a) throws AuthException, DAOException {
-		// Delete member
-		delete(m, a);
-		
-		// Write new member info
-		create(m, a);
+		try {
+			// Delete member
+			delete(m, a);
+			
+			// Write new member info
+			create(m, a);
+		} catch (AuthException e) {
+			throw new AuthException("Must be authorized to update");
+		}
 	}
 
 	@Override
