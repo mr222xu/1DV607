@@ -6,26 +6,55 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import model.dao.DAOException;
 import model.dao.MemberDAO;
 import model.dao.impl.MemberDAOImpl;
 
+/**
+ * Member class
+ * 
+ * @author mr222xu
+ *
+ */
 public class Member implements Comparable<Member> {
 	
+	// Members
 	private String firstname;
 	private String lastname;
 	private PersonalNumber personalNumber;
 	private Set<Boat> boats;
 	private int id;
+	
+	// Static member
 	private final static MemberDAO DAO = new MemberDAOImpl();
 
+	/**
+	 * Constructor
+	 * 
+	 * @param firstname - The member's first name
+	 * @param lastname - The member's last name
+	 * @param personalNumber - The member's personal number
+	 */
 	public Member(String firstname, String lastname, PersonalNumber personalNumber) {
 		setFirstname(firstname);
 		setLastname(lastname);
 		setPersonalNumber(personalNumber);
 		setBoats(new HashSet<Boat>());
-		setId(DAO.getNextId());
+		
+		// Handle failure in MemberDAO
+		try {
+			setId(DAO.getNextId());
+		} catch (DAOException e) {
+			// Default to one
+			setId(1);
+		}
 	}
 	
+	/**
+	 * Private constructor when using the Builder
+	 *
+	 * @param builder - A Member Builder object
+	 */
 	private Member(Builder builder) {
 		setFirstname(builder.firstname);
 		setLastname(builder.lastname);
@@ -34,10 +63,20 @@ public class Member implements Comparable<Member> {
 		setId(builder.id);
 	}
 
+	/**
+	 * To get the member's first name
+	 * 
+	 * @return - A String object representing the member's first name
+	 */
 	public String getFirstname() {
 		return firstname;
 	}
 
+	/**
+	 * To set the member's first name
+	 * 
+	 * @param firstname - The member's first name
+	 */
 	public void setFirstname(String firstname) {
 		if (firstname == null)
 			throw new IllegalArgumentException("Member firstname cannot be null.");
@@ -45,10 +84,20 @@ public class Member implements Comparable<Member> {
 		this.firstname = firstname;
 	}
 
+	/**
+	 * To get the member's last name
+	 * 
+	 * @return - A String object representing the member's last name
+	 */
 	public String getLastname() {
 		return lastname;
 	}
 
+	/**
+	 * To set the member's last name
+	 * 
+	 * @param firstname - The member's last name
+	 */
 	public void setLastname(String lastname) {
 		if (lastname == null)
 			throw new IllegalArgumentException("Member lastname cannot be null.");
@@ -56,14 +105,29 @@ public class Member implements Comparable<Member> {
 		this.lastname = lastname;
 	}
 	
+	/**
+	 * To get the member's full name
+	 * 
+	 * @return - A String object representing the member's full name, i.e. first name and last name
+	 */
 	public String getName() {
 		return firstname + " " + lastname;
 	}
 
+	/**
+	 * To get the member's personal number
+	 * 
+	 * @return - A PersonalNumber object representing the member's personal number
+	 */
 	public PersonalNumber getPersonalNumber() {
 		return personalNumber;
 	}
 
+	/**
+	 * To set the member's personal number
+	 * 
+	 * @param personalNumber - The member's personal number
+	 */
 	public void setPersonalNumber(PersonalNumber personalNumber) {
 		if (personalNumber == null)
 			throw new IllegalArgumentException("Member personal number cannot be null.");
@@ -71,10 +135,20 @@ public class Member implements Comparable<Member> {
 		this.personalNumber = personalNumber;
 	}
 	
+	/**
+	 * To add a boat to the member
+	 * 
+	 * @param boat - a boat object
+	 */
 	public void addBoat(Boat boat) {
 		boats.add(boat);
 	}
 	
+	/**
+	 * Private method to set all boats for a member, used by the Member Builder
+	 * 
+	 * @param boats - a set of boat objects
+	 */
 	private void setBoats(Set<Boat> boats) {
 		if (boats == null)
 			boats = new HashSet<>();
@@ -82,10 +156,20 @@ public class Member implements Comparable<Member> {
 		this.boats = boats;
 	}
 	
+	/**
+	 * To remove a boat from the member
+	 * 
+	 * @param boat - a boat object
+	 */
 	public void removeBoat(Boat boat) {
 		boats.remove(boat);
 	}
 	
+	/**
+	 * To get a list of all of the member's boats
+	 * 
+	 * @return - a list of of all of the member's boats
+	 */
 	public List<Boat> getBoats() {
 		List<Boat> list = new ArrayList<Boat>();
 		list.addAll(boats);
@@ -93,10 +177,20 @@ public class Member implements Comparable<Member> {
 		return Collections.unmodifiableList(list);
 	}
 	
+	/**
+	 * To get the number of boats that is registered to the member
+	 * 
+	 * @return - number of boats as an integer
+	 */
 	public int getNumberOfBoats() {
 		return boats.size();
 	}
 	
+	/**
+	 * Private method to set the member ID. Used by the Member Builder
+	 * 
+	 * @param id - a member ID
+	 */
 	private void setId(int id) {
 		if (id < 0)
 			throw new IllegalArgumentException("Member id cannot be less than 1.");
@@ -104,6 +198,11 @@ public class Member implements Comparable<Member> {
 		this.id = id;
 	}
 
+	/**
+	 * To get the member's ID
+	 * 
+	 * @return - member ID
+	 */
 	public int getId() {
 		return id;
 	}
@@ -113,6 +212,7 @@ public class Member implements Comparable<Member> {
 		return Integer.compare(id, other.id);
 	}
 	
+	// Generated by Eclipse
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -125,6 +225,7 @@ public class Member implements Comparable<Member> {
 		return result;
 	}
 
+	// Generated by Eclipse
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -159,6 +260,12 @@ public class Member implements Comparable<Member> {
 		return true;
 	}
 
+	/**
+	 * Builder pattern
+	 * 
+	 * @author mr222xu
+	 *
+	 */
 	public static class Builder {
 		private String firstname;
 		private String lastname;

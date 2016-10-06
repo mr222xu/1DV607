@@ -1,19 +1,42 @@
 package model;
 
+/**
+ * Boat class
+ * 
+ * @author mr222xu
+ *
+ */
 public class Boat {
 	
+	// Members
 	private BoatType type;
 	private int length;
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param type - Boat type
+	 * @param length - Boat length in feet
+	 */
 	public Boat(BoatType type, int length) {
 		setType(type);
 		setLength(length);
 	}
 
+	/**
+	 * To get the type of the boat
+	 * 
+	 * @return - BoatType object
+	 */
 	public BoatType getType() {
 		return type;
 	}
 
+	/**
+	 * To set the type of the boat
+	 * 
+	 * @param type - A BoatType object
+	 */
 	public void setType(BoatType type) {
 		if (type == null)
 			throw new IllegalArgumentException("Boat type cannot be null.");
@@ -21,10 +44,20 @@ public class Boat {
 		this.type = type;
 	}
 
+	/**
+	 * To get the length of the boat
+	 * 
+	 * @return - Boat's length in feet
+	 */
 	public int getLength() {		
 		return length;
 	}
 
+	/**
+	 * To set the length of the boat
+	 * 
+	 * @param length - Boat's length in feet
+	 */
 	public void setLength(int length) {
 		if (length < 1)
 			throw new IllegalArgumentException("Boat length cannot be less than 1 foot.");
@@ -67,6 +100,12 @@ public class Boat {
 				.toString();
 	}
 
+	/**
+	 * Builder pattern
+	 * 
+	 * @author mr222xu
+	 *
+	 */
 	public static class Builder {
 		
 		private BoatType type;
