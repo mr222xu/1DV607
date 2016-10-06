@@ -5,6 +5,22 @@ Actor->Console: getInput()
 Console-->-Controller: return event
 alt event==LIST_MEMBERS_COMPACT
 Controller->+MemberDAO: getMembers()
+MemberDAO->+File: <<read xml>>
+File-->-MemberDAO: return xml
+MemberDAO->+Document: <<create>>
+Document-->-MemberDAO: return document
+loop members
+MemberDAO->+Document: <<parse xml>>
+Document-->-MemberDAO: return member attributes
+loop boats
+MemberDAO->+Document: <<parse xml>>
+Document-->-MemberDAO: return boat attributes
+MemberDAO->+Boat: <<create>>
+Boat-->-MemberDAO: return boat
+end
+MemberDAO->+Member: <<create>>
+Member-->-MemberDAO: return member
+end
 MemberDAO-->-Controller: return members
 Controller->Console: showMembersCompact(members)
 loop members
