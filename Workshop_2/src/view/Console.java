@@ -3,6 +3,8 @@ package view;
 import static java.lang.System.err;
 import static java.lang.System.out;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,9 +34,10 @@ public class Console implements View {
 		out.println("  3. List all members (verbose)");
 		out.println("  4. Delete member");
 		out.println("  5. Update member");
-		out.println("  6. Create boat");
-		out.println("  7. Delete boat");
-		out.println("  8. Update boat");
+		out.println("  6. Check member");
+		out.println("  7. Create boat");
+		out.println("  8. Delete boat");
+		out.println("  9. Update boat");
 		out.println("  q. Quit");
 		out.println();
 		out.println("###########################################");
@@ -124,6 +127,16 @@ public class Console implements View {
 	 */
 	public int updateMember(List<Member> members) {
 		return getMemberIndex(members, "Enter number of member to update");
+	}
+	
+	/**
+	 * Check a member menu
+	 * 
+	 * @param members - A list of members
+	 * @return - Index of member to update
+	 */
+	public int checkMember(List<Member> members) {
+		return getMemberIndex(members, "Enter number of member to look at");
 	}
 	
 	/**
@@ -224,6 +237,15 @@ public class Console implements View {
 						.append(boat)
 						.toString());
 		}
+	}
+	
+	/**
+	 * Show verbose info of one member
+	 * 
+	 * @param member - A member
+	 */
+	public void showMember(Member member) {
+		showMembersVerbose(Arrays.asList(member));
 	}
 	
 	/**

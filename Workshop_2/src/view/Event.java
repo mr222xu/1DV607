@@ -13,9 +13,10 @@ public enum Event {
 	LIST_MEMBERS_VERBOSE("3"),
 	DELETE_MEMBER("4"),
 	UPDATE_MEMBER("5"),
-	CREATE_BOAT("6"),
-	DELETE_BOAT("7"),
-	UPDATE_BOAT("8"),
+	CHECK_MEMBER("6"),
+	CREATE_BOAT("7"),
+	DELETE_BOAT("8"),
+	UPDATE_BOAT("9"),
 	QUIT("q");
 	
 	private String value;

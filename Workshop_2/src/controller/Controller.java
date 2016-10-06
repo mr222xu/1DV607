@@ -62,6 +62,9 @@ public class Controller {
 			case UPDATE_MEMBER:
 				updateMember();
 				break;
+			case CHECK_MEMBER:
+				checkMember();
+				break;
 			case CREATE_BOAT:
 				createBoat();
 				break;
@@ -129,6 +132,19 @@ public class Controller {
 			member.setLastname(view.getLastname());
 			member.setPersonalNumber(new PersonalNumber(view.getPersonalNumber()));
 			memberDAO.update(member, authorization);
+		} catch (Exception e) {
+			view.showError(e);
+		}
+	}
+	
+	/**
+	 * Check a member
+	 */
+	private void checkMember() {
+		try {
+			List<Member> members = memberDAO.getMembers();
+			Member member = members.get(view.checkMember(members));
+			view.showMember(member);
 		} catch (Exception e) {
 			view.showError(e);
 		}

@@ -1,0 +1,35 @@
+title Create member
+Actor->Actor:
+Controller->+Console: getEvent()
+Actor->Console: getInput()
+Console-->-Controller: return event
+alt event==LOGIN
+Controller->+Authorization: <<create>>
+Authorization-->-Controller: return authorization
+Controller->+Console: getUsername()
+Actor->Console: getInput()
+Console-->-Controller: return username
+Controller->+Console: getPassword()
+Actor->Console: getInput()
+Console-->-Controller: return password
+Controller->Authorization: authorize(username, password)
+end
+Controller->+Console: getEvent()
+Actor->Console: getInput()
+Console-->-Controller: return event
+alt event==CREATE_MEMBER
+Controller->+Console: getFirstname()
+Actor->Console: getInput()
+Console-->-Controller: return firstname
+Controller->+Console: getLastname()
+Actor->Console: getInput()
+Console-->-Controller: return lastname
+Controller->+Console: getPersonalNumber()
+Actor->Console: getInput()
+Console-->-Controller: return personalNumber
+Controller->+PersonalNumber: <<create>
+PersonalNumber-->-Controller: return personalNumber
+Controller->+Member: <<create>>
+Member-->-Controller: return member
+Controller->MemberDAO: create(member, authorization)
+end

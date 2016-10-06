@@ -1,0 +1,13 @@
+title List members
+Actor->Actor:
+Controller->+Console: getEvent()
+Actor->Console: getInput()
+Console-->-Controller: return event
+alt event==LIST_MEMBERS_COMPACT
+Controller->+MemberDAO: getMembers()
+MemberDAO-->-Controller: return members
+Controller->Console: showMembersCompact(members)
+loop members
+Console->Actor: <<print>>
+end
+end
