@@ -1,10 +1,12 @@
 # Workshop 2
 
-+ Please use JRE/JDK 1.8
++ Assumed that JRE/JDK 1.8 is installed on your system
 
-+ Build and create jar with mvn package
++ Assumed that Maven 3.x is installed on your system
 
-+ Run with java -jar Workshop2-0.0.1-SNAPSHOT.jar
++ Build and create jar with: "mvn package"
+
++ Run with: "java -jar Workshop2-0.0.1-SNAPSHOT.jar"
 
 + Username/password is secretary/1DV607
 
