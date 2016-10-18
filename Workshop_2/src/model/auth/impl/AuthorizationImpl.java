@@ -22,6 +22,11 @@ public class AuthorizationImpl implements Authorization {
 		// Authorized
 		authorized = true;
 	}
+	
+	@Override
+	public void logout() {
+		authorized = false;
+	}
 
 	@Override
 	public boolean isAuthorized() {

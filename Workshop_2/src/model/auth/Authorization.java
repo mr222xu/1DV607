@@ -18,6 +18,11 @@ public interface Authorization {
 	public void authorize(String username, String password) throws AuthException;
 	
 	/**
+	 * Log out a user
+	 */
+	public void logout();
+	
+	/**
 	 * Check if user is authorized
 	 * 
 	 * @return - True if authorized, false otherwise

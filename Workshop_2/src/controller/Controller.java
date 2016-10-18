@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Boat;
@@ -7,7 +8,6 @@ import model.BoatType;
 import model.Member;
 import model.PersonalNumber;
 import model.auth.Authorization;
-import model.auth.impl.AuthorizationImpl;
 import model.dao.MemberDAO;
 import view.Console;
 
@@ -30,9 +30,10 @@ public class Controller {
 	 * @param view - The view
 	 * @param memberDAO - The model
 	 */
-	public Controller(Console view, MemberDAO memberDAO) {
+	public Controller(Console view, MemberDAO memberDAO, Authorization authorization) {
 		this.view = view;
 		this.memberDAO = memberDAO;
+		this.authorization = authorization;
 	}
 	
 	/**
@@ -88,7 +89,6 @@ public class Controller {
 	
 	public void login() {
 		try {
-			authorization = new AuthorizationImpl();
 			authorization.authorize(view.getUsername(), view.getPassword());
 		} catch (Exception e) {
 			view.showError(e);
@@ -155,9 +155,13 @@ public class Controller {
 	 */
 	private void createBoat() {
 		try {
+			List<String> types = new ArrayList<>();
+			for (BoatType type : BoatType.values())
+				types.add(type.toString());
+				
 			List<Member> members = memberDAO.getMembers();
 			Member member = members.get(view.createBoat(members));
-			Boat boat = new Boat(BoatType.valueOf(view.getBoatType(BoatType.values())), 
+			Boat boat = new Boat(BoatType.valueOf(view.getBoatType(types)), 
 								Integer.parseInt(view.getBoatLength()));
 			member.addBoat(boat);
 			memberDAO.update(member, authorization);
@@ -193,11 +197,15 @@ public class Controller {
 			List<Member> members = memberDAO.getMembers();
 			Member member = members.get(view.updateBoat(members));
 			List<Boat> boats = member.getBoats();
+
+			List<String> types = new ArrayList<>();
+			for (BoatType type : BoatType.values())
+				types.add(type.toString());
 			
 			if (boats.size() > 0) {
 				Boat boat = boats.get(view.updateBoat(member));
 				member.removeBoat(boat);
-				boat = new Boat(BoatType.valueOf(view.getBoatType(BoatType.values())), 
+				boat = new Boat(BoatType.valueOf(view.getBoatType(types)), 
 						Integer.parseInt(view.getBoatLength()));
 				member.addBoat(boat);
 				memberDAO.update(member, authorization);	

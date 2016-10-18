@@ -1,29 +1,25 @@
 title List members
-Actor->Actor:
-Controller->+Console: getEvent()
-Actor->Console: getInput()
-Console-->-Controller: return event
+":Controller"->+":Console": getEvent()
+activate ":Controller"
+":Console"->":Console": getInput()
+":Console"-->-":Controller": event
 alt event==LIST_MEMBERS_COMPACT
-Controller->+MemberDAO: getMembers()
-MemberDAO->+File: <<read xml>>
-File-->-MemberDAO: return xml
-MemberDAO->+Document: <<create>>
-Document-->-MemberDAO: return document
-loop members
-MemberDAO->+Document: <<parse xml>>
-Document-->-MemberDAO: return member attributes
-loop boats
-MemberDAO->+Document: <<parse xml>>
-Document-->-MemberDAO: return boat attributes
-MemberDAO->+Boat: <<create>>
-Boat-->-MemberDAO: return boat
+":Controller"->+":MemberDAO": getMembers()
+":MemberDAO"->":MemberDAO": createXml()
+":MemberDAO"->+":DocumentBuilder": parse(database)
+":DocumentBuilder"-->-":MemberDAO": document
+loop members in XML document
+loop boats in XML document
+":MemberDAO"->+":Boat": <<create>>
 end
-MemberDAO->+Member: <<create>>
-Member-->-MemberDAO: return member
+":MemberDAO"->+":Member": <<create>>
+deactivate ":Boat"
 end
-MemberDAO-->-Controller: return members
-Controller->Console: showMembersCompact(members)
+":MemberDAO"-->-":Controller": members
+deactivate ":Member"
+":Controller"->":Console": showMembersCompact(members)
 loop members
-Console->Actor: <<print>>
+activate ":Console"
+":Console"->":System.out": println()
 end
 end

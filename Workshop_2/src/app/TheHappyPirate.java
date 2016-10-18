@@ -1,6 +1,7 @@
 package app;
 
 import controller.Controller;
+import model.auth.impl.AuthorizationImpl;
 import model.dao.impl.MemberDAOImpl;
 import view.Console;
 
@@ -13,7 +14,7 @@ import view.Console;
 public class TheHappyPirate {
 	
 	public static void main(String... args) {
-		Controller c = new Controller(new Console(), new MemberDAOImpl());
+		Controller c = new Controller(new Console(), new MemberDAOImpl(), new AuthorizationImpl());
 		while(c.run());
 	}
 }

@@ -4,12 +4,10 @@ import static java.lang.System.err;
 import static java.lang.System.out;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 import model.Boat;
-import model.BoatType;
 import model.Member;
 
 /**
@@ -298,12 +296,12 @@ public class Console implements View {
 	 * 
 	 * @return - Boat type
 	 */
-	public String getBoatType(BoatType[] types) {
+	public String getBoatType(List<String> types) {
 		StringBuilder sb = new StringBuilder("Boat type (Enter full name: ");
 		
 		// Print all boat types
-		for (BoatType type : types)
-			sb.append(type.toString())
+		for (String type : types)
+			sb.append(type)
 				.append(", ");
 		
 		sb.delete(sb.length() - 2, sb.length());

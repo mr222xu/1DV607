@@ -1,35 +1,36 @@
 title Create member
-Actor->Actor:
-Controller->+Console: getEvent()
-Actor->Console: getInput()
-Console-->-Controller: return event
+":Controller"->+":Console": getEvent()
+activate ":Controller"
+":Console"->":Console": getInput()
+":Console"-->-":Controller": event
 alt event==LOGIN
-Controller->+Authorization: <<create>>
-Authorization-->-Controller: return authorization
-Controller->+Console: getUsername()
-Actor->Console: getInput()
-Console-->-Controller: return username
-Controller->+Console: getPassword()
-Actor->Console: getInput()
-Console-->-Controller: return password
-Controller->Authorization: authorize(username, password)
+":Controller"-->+":Authorization": <<create>>
+":Controller"->+":Console": getUsername()
+deactivate ":Authorization"
+":Console"->":Console": getInput()
+":Console"-->-":Controller": username
+":Controller"->+":Console": getPassword()
+":Console"->":Console": getInput()
+":Console"-->-":Controller": password
+":Controller"->+":Authorization": authorize(username, password)
 end
-Controller->+Console: getEvent()
-Actor->Console: getInput()
-Console-->-Controller: return event
+":Controller"->+":Console": getEvent()
+deactivate ":Authorization"
+":Console"->":Console": getInput()
+":Console"-->-":Controller": event
 alt event==CREATE_MEMBER
-Controller->+Console: getFirstname()
-Actor->Console: getInput()
-Console-->-Controller: return firstname
-Controller->+Console: getLastname()
-Actor->Console: getInput()
-Console-->-Controller: return lastname
-Controller->+Console: getPersonalNumber()
-Actor->Console: getInput()
-Console-->-Controller: return personalNumber
-Controller->+PersonalNumber: <<create>
-PersonalNumber-->-Controller: return personalNumber
-Controller->+Member: <<create>>
-Member-->-Controller: return member
-Controller->MemberDAO: create(member, authorization)
+":Controller"->+":Console": getFirstname()
+":Console"->":Console": getInput()
+":Console"-->-":Controller": firstname
+":Controller"->+":Console": getLastname()
+":Console"->":Console": getInput()
+":Console"-->-":Controller": lastname
+":Controller"->+":Console": getPersonalNumber()
+":Console"->":Console": getInput()
+":Console"-->-":Controller": personalNumber
+":Controller"->+":PersonalNumber": <<create>
+":Controller"->+":Member": <<create>>
+deactivate ":PersonalNumber"
+":Controller"->+":MemberDAO": create(member, authorization)
+deactivate ":Member"
 end
