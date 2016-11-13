@@ -61,9 +61,9 @@ public class Console implements View {
 	 * 
 	 * @param error - The exception object
 	 */
-	public void showError(Exception error) {
+	public void showError(String error) {
 		err.println();
-		err.print(error.getMessage() + " Press any key to continue...");
+		err.print(error + " Press any key to continue...");
 		getInput(null);
 		err.println();
 	}

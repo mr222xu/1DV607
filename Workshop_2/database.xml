@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<members>
+<member><id>5</id><firstname>Anders</firstname><lastname>Svensson</lastname><personalnumber>811001-1234</personalnumber><boats/></member>
+<member><id>4</id><firstname>Eva</firstname><lastname>Hansson</lastname><personalnumber>121212-0001</personalnumber><boats/></member>
+<member><id>6</id><firstname>Test</firstname><lastname>Testsson</lastname><personalnumber>100110-4321</personalnumber><boats/></member>
+<member><id>1</id><firstname>Hans</firstname><lastname>Turesson</lastname><personalnumber>910610-1221</personalnumber><boats/></member>
+<member><id>2</id><firstname>Test1</firstname><lastname>Test1</lastname><personalnumber>910110-1221</personalnumber><boats/></member>
+<member><id>3</id><firstname>Annnnnnna</firstname><lastname>Test</lastname><personalnumber>610210-1221</personalnumber><boats/></member>
+<member><id>4</id><firstname>Annnnnnna</firstname><lastname>Test2</lastname><personalnumber>110211-1221</personalnumber><boats/></member>
+</members>

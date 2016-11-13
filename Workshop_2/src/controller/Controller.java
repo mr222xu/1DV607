@@ -7,7 +7,9 @@ import model.Boat;
 import model.BoatType;
 import model.Member;
 import model.PersonalNumber;
+import model.auth.AuthException;
 import model.auth.Authorization;
+import model.dao.DAOException;
 import model.dao.MemberDAO;
 import view.Console;
 
@@ -81,7 +83,7 @@ public class Controller {
 				// Invalid input
 			}
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 		
 		return true;
@@ -91,7 +93,7 @@ public class Controller {
 		try {
 			authorization.authorize(view.getUsername(), view.getPassword());
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -104,7 +106,7 @@ public class Controller {
 					view.getLastname(), new PersonalNumber(view.getPersonalNumber()));
 			memberDAO.create(member, authorization);
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -117,7 +119,7 @@ public class Controller {
 			Member member = members.get(view.deleteMember(members));
 			memberDAO.delete(member, authorization);
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -133,7 +135,7 @@ public class Controller {
 			member.setPersonalNumber(new PersonalNumber(view.getPersonalNumber()));
 			memberDAO.update(member, authorization);
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -146,7 +148,7 @@ public class Controller {
 			Member member = members.get(view.checkMember(members));
 			view.showMember(member);
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -166,7 +168,7 @@ public class Controller {
 			member.addBoat(boat);
 			memberDAO.update(member, authorization);
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -185,7 +187,7 @@ public class Controller {
 				memberDAO.update(member, authorization);
 			}
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 	
@@ -211,9 +213,22 @@ public class Controller {
 				memberDAO.update(member, authorization);	
 			}
 		} catch (Exception e) {
-			view.showError(e);
+			view.showError(getErrorMsg(e));
 		}
 	}
 
+	/**
+	 * Get error message
+	 */
+	private String getErrorMsg(Exception e) {
+		String error;
+		
+		if (e instanceof DAOException || e instanceof AuthException || e instanceof IllegalArgumentException)
+			error = e.getMessage();
+		else
+			error = "Invalid input.";
+		
+		return error;
+	}
 	
 }
